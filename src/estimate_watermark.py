@@ -200,7 +200,12 @@ def watermark_detector(img, gx, gy, thresh_low=200, thresh_high=220, printval=Fa
     if printval:
         print(index)
 
+
     x, y = (index[0] - rect[0] / 2), (index[1] - rect[1] / 2)
     im = img.copy()
     cv2.rectangle(im, (int(np.ceil(y)), int(np.ceil(x))), (int(np.ceil(y)) + rect[1], int(np.ceil(x)) + rect[0]), (255, 0, 0))
     return (im, (int(np.ceil(x)), int(np.ceil(y))), (rect[0], rect[1]))
+
+
+    # cv2.rectangle(im, (y, x),( y+ rect[1], x + rect[0]), (255, 0, 0))
+    # return (im, (x, y), (rect[0], rect[1]))

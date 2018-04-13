@@ -14,7 +14,8 @@ def MatrixToImage(data):
 
 
 
-gx, gy, gxlist, gylist,num_images = estimate_watermark('images/fotolia_processed')
+# gx, gy, gxlist, gylist,num_images = estimate_watermark('images2_processed')
+gx, gy, gxlist, gylist,num_images = estimate_watermark('preprocessed2')
 
 # est, loss = poisson_reconstruct(gx, gy)
 est = poisson_reconstruct(gx, gy)
@@ -22,19 +23,22 @@ cropped_gx, cropped_gy = crop_watermark(gx, gy)
 est2 = poisson_reconstruct(cropped_gx, cropped_gy)
 
 # random photo
-img = cv2.imread('images/fotolia_processed/fotolia_26734091.jpg')
+img = cv2.imread('preprocessed2/1be5f812-2dc5-4260-9afe-2327323c67b7.jpg')
+# img = cv2.imread('images2_processed/fotolia_539921.jpg')
 im, start, end = watermark_detector(img, cropped_gx, cropped_gy)
 
 
 
 plt.figure(figsize=(12, 12), dpi= 80, facecolor='w', edgecolor='k')
-plt.imshow(im)
-
+plt.imshow(PlotImage(im))
+plt.show()
 
 print(cropped_gx.shape, cropped_gy.shape, est.shape, est2.shape)
 print(im.shape, start, end)
 
-plt.imshow(img[start[0]:(start[0]+end[0]), start[1]:(start[1]+end[1]), :])
+plt.figure()
+plt.imshow(PlotImage(img[start[0]:(start[0]+end[0]), start[1]:(start[1]+end[1]), :]))
+plt.show()
 
 
 
@@ -45,7 +49,8 @@ This is the part where we get all the images, extract their parts, and then add 
 images_cropped = np.zeros((num_images,) + cropped_gx.shape)
 
 # get images
-foldername = 'images/fotolia_processed'
+# foldername = 'images2_processed'
+foldername = 'preprocessed2'
 
 # Store all the watermarked images
 # start, and end are already stored
@@ -103,7 +108,7 @@ with tf.Session() as sess:
     sess.run(tf.global_variables_initializer())
     for i in range(100):
         print("Start")
-        _, loss = sess.run([model['step'], model['loss']], feed_dict={
+        _, loss, Wk,Ik = sess.run([model['step'], model['loss'],model['W'],model['I']], feed_dict={
             model['J']: J,
             model['alpha']: alpha,
             model['W_m']: W_m,
@@ -112,3 +117,5 @@ with tf.Session() as sess:
             # model['W']: W
         })
         print(loss)
+
+print(2)

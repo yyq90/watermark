@@ -41,7 +41,7 @@ plt.show()
 
 # random photo
 # img = cv2.imread('images/fotolia_processed/fotolia_137840645.jpg')
-# img = cv2.imread('images/fotolia_processed/fotolia_69189206.jpg')
+# img = cv2.imread('images2_processed/fotolia_539921.jpg')
 img = cv2.imread('preprocessed/0b76b4df-4bb2-4e3c-9173-c05153367d61.jpg')
 im, start, end = watermark_detector(img, cropped_gx, cropped_gy)
 
@@ -119,9 +119,9 @@ Jt = J[:1]
 # Solve for all images
 Wk, Ik, W, alpha1 = solve_images(Jt, W_m, alpha, W)
 # Wk, Ik, W, alpha1 = solve_images(Jt, W_m, alpha, W)
-alph_image = MatrixToImage(PlotImage(Wk))
+alph_image = MatrixToImage(PlotImage(Wk[0]))
 alph_image.save('Wk.jpg')
-alph_image = MatrixToImage(PlotImage(Ik))
+alph_image = MatrixToImage(PlotImage(Ik[0]))
 alph_image.save('Ik.jpg')
 alph_image = MatrixToImage(PlotImage(W))
 alph_image.save('W.jpg')
